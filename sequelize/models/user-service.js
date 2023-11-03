@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class service extends Model {
+  class service_user extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,22 +14,25 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.application_user,{foreignKey:'user_id'})
     }
   }
-  service.init({
+  service_user.init({
     service_id: {
       type:DataTypes.INTEGER,
       primaryKey:true
       ,autoIncrement:true
     } ,
-    type: DataTypes.TEXT,
-    payment: DataTypes.INTEGER,
-    title: DataTypes.TEXT,
-    description: DataTypes.TEXT,
+     user_id: {
+      type:DataTypes.INTEGER,
+      primaryKey:true
+      ,autoIncrement:true
+    } ,
+    status: DataTypes.TEXT,
+   
 
   }, {
     sequelize,
-    modelName: 'service',
+    modelName: 'service_user',
     underscored:true,
     freezeTableName: true
   });
-  return service;
+  return service_user;
 };

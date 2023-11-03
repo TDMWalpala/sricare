@@ -14,6 +14,7 @@ const authRoutes = require("../routes/user_auth");
 const pool = require("../database/dbconnection");
 const assetRouter = require("../routes/asset_routes");
 const userTRoutes = require("../routes/adminitrator");
+const serviceRoutes = require("../routes/service_route");
 
 dotenv.config()
 
@@ -32,6 +33,8 @@ app.use(express.static('public'))
 //all routes
 app.use(assetRouter)
 app.use(authRoutes)
+app.use(serviceRoutes)
+app.use(billRoutes)
 
 
 

@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.TEXT,
     payment: DataTypes.INTEGER,
     description: DataTypes.TEXT,
+    status: DataTypes.TEXT,
 
   }, {
     sequelize,

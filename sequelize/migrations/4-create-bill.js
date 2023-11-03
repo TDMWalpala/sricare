@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('service', {
+    await queryInterface.createTable('bill', {
       bill_id: {
         allowNull: false,
         autoIncrement: true,
@@ -23,12 +23,13 @@ module.exports = {
       payment: {
         type: Sequelize.INTEGER
       },
-      description: {
+       status: {
         type: Sequelize.TEXT
       },
+     
          });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('service');
+    await queryInterface.dropTable('bill');
   }
 };
