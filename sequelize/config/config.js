@@ -8,21 +8,21 @@ module.exports = {
     development: {
       username: "fouser",
       password: "qwerty",
-      database: "new_focusmi",
+      database: "sricare",
       host: "localhost",
       dialect: 'postgres'
     },
     test: {
       username: "fouser",
       password: "qwerty",
-      database: "new_focusmi",
+      database: "sricare",
       host: "localhost",
       dialect: 'postgres'
     },
     production: {
       username: "fouser",
       password: "qwerty",
-      database: "new_focusmi",
+      database: "sricare",
       host: "localhost",
       dialect: 'postgres'
     }
