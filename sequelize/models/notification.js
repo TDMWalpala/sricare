@@ -1,8 +1,10 @@
+'use strict';
 const {
   Model
 } = require('sequelize');
+const application_user = require('./application_user');
 module.exports = (sequelize, DataTypes) => {
-  class service_user extends Model {
+  class notification extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,25 +15,28 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.application_user,{foreignKey:'user_id'})
     }
   }
-  service_user.init({
-    service_id: {
+  notification.init({
+    noti_id: {
       type:DataTypes.INTEGER,
       primaryKey:true
-   
+      ,autoIncrement:true
     } ,
-     user_id: {
-      type:DataTypes.INTEGER,
-      primaryKey:true
-    
-    } ,
+    user_id:{
+        type:DataTypes.INTEGER,
+        references:{
+            key:'user_id',
+            model:'application_user'
+        }
+    },
     status: DataTypes.TEXT,
-   
+    title: DataTypes.TEXT,
+    description: DataTypes.TEXT,
 
   }, {
     sequelize,
-    modelName: 'service_user',
+    modelName: 'notification',
     underscored:true,
     freezeTableName: true
   });
-  return service_user;
+  return notification;
 };

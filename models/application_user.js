@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const pool = require("../database/dbconnection");
-const { application_user } = require("../sequelize/models");
+const application_user = require("../sequelize/models");
+
 
 
 class ApplicationUser {

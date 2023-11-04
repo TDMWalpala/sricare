@@ -32,6 +32,8 @@ const sendRefreshToken = (res, refreshtoken) => {
 
 const isAuth = (req,res) => {
     const authorization = req.headers['authorization'];
+    console.log("-------------")
+    console.log(authorization)
     if(!authorization){
         return false;
     }

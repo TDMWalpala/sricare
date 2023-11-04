@@ -9,12 +9,10 @@ let cors = require("cors");
 let bodyParser = require('body-parser');
 let dotenv = require("dotenv");
 let  {verify} = require('jsonwebtoken');
-const dbmodel = require("../models/core/dbmodel");
 const authRoutes = require("../routes/user_auth");
-const pool = require("../database/dbconnection");
 const assetRouter = require("../routes/asset_routes");
-const userTRoutes = require("../routes/adminitrator");
 const serviceRoutes = require("../routes/service_route");
+const billRoutes = require("../routes/bill_routes");
 
 dotenv.config()
 

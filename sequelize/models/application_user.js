@@ -11,19 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.appointment,{foreignKey:'user_id'})
-      this.hasMany(models.payment,{foreignKey:'user_id'})
-      this.hasMany(models.task_group,{foreignKey:'creator_id'})
-      this.belongsToMany(models.mindfulness_course,{through:models.course_user})
-      this.belongsToMany(models.task_group,{through:models.group_user})
-      this.belongsToMany(models.course_level,{through:models.level_user})
-      this.belongsToMany(models.task,{through:models.user_create_task})
-      this.belongsToMany(models.task,{through:models.user_task})
+
     }
   }
   application_user.init({
     user_id: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey:true
       ,autoIncrement:true
     } ,

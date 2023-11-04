@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       ,autoIncrement:true
     } ,
     user_id:{
+        type:DataTypes.INTEGER,
         references:{
             key:'user_id',
             model:'application_user'
@@ -28,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: DataTypes.TEXT,
     payment: DataTypes.INTEGER,
-    description: DataTypes.TEXT,
     status: DataTypes.TEXT,
 
   }, {

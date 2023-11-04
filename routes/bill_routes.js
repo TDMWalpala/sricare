@@ -1,15 +1,17 @@
 const {bill} = require("../sequelize/models")
 
+let express= require("express")
+const auth = require("../tokens/auth")
 let billRoutes = express.Router()
 
-
-billRoutes.post('/api/create-bill', (req,res, next)=>{
+//create bills
+billRoutes.post('/api/create-bill',auth, (req,res, next)=>{
     try{
-        service.create({
+        bill.create({
             'user_id':req.body.user_id,
             'title':req.body.title,
             'payment':req.body.payment,
-            'description':req.body.description
+            'status':'pending'
         })
 
     }
@@ -22,8 +24,8 @@ billRoutes.post('/api/create-bill', (req,res, next)=>{
     next()
 })
 
-
-billRoutes.get('/api/get-service/:userid', async(req,res, next)=>{
+//get bill by userid
+billRoutes.get('/api/get-bill/:userid',auth, async(req,res, next)=>{
     try{
        var result = await bill.findAll({
             where:{
@@ -46,12 +48,17 @@ billRoutes.get('/api/get-service/:userid', async(req,res, next)=>{
     next()
 })
 
-billRoutes.get('/api/get-service', async(req,res, next)=>{
-    try{
-        var result = await bill.findAll({
 
+
+//when the amount is payed by user delete all the bills
+billRoutes.get('/api/pay-bills/:userid', auth,async(req,res, next)=>{
+    try{
+        bill.destroy({
+            where:{
+                user_id:req.params.userid
+            }
         })
-        res.send(result)
+      
 
     }
     catch(e){
@@ -63,7 +70,8 @@ billRoutes.get('/api/get-service', async(req,res, next)=>{
     next()
 })
 
-billRoutes.get('/api/set-service/:serviceid', async(req,res, next)=>{
+//updaet bill as payed
+billRoutes.get('/api/set-bill/:serviceid', auth,async(req,res, next)=>{
     try{
         var result = await bill.update({status:'paid'},
         {

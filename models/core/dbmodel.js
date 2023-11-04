@@ -1,5 +1,4 @@
 const { Pool } = require("pg");
-const {sequelize} = require('../../sequelize/models');
 const dotenv = require("dotenv");
 dotenv.config();
 class DbModel{

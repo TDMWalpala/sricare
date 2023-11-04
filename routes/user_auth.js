@@ -3,15 +3,13 @@ const AuthUser = require('../models/authuser')
 let authRoutes = express.Router()
 const {createAccessToken ,createRefreshToken, sendRefreshToken, sendAccessToken, isAuth}= require('../tokens/tokens')
 const { verify } = require('jsonwebtoken')
-const {administrative_user} = require('../sequelize/models')
 const {user_otp} = require('../sequelize/models')
 const {application_user} = require('../sequelize/models')
 const auth = require('../tokens/auth');
-const TaskPlan = require('../models/taks_plan')
-const task = require('../sequelize/models/task')
+
 
 //signup routes
-authRoutes.post('/api/signup', async (req,res,next)=>{
+authRoutes.post('/api/signup',async (req,res,next)=>{
     console.log("inside")
     const {username, email, password} = req.body;
     let User = new AuthUser(email, password, username);
@@ -84,7 +82,7 @@ authRoutes.post('/api/signin', async (req,res,next) => {
 })
 
 
-authRoutes.get('/api/testuser',async(req,res,next) => {
+authRoutes.get('/api/testuser',auth,async(req,res,next) => {
     const userId=isAuth(req,res);
     if(userId!=null){
         console.log(userId);
@@ -92,7 +90,7 @@ authRoutes.get('/api/testuser',async(req,res,next) => {
     next();
 })
 
-authRoutes.get("/api/is-token-valid",async(req, res, next)=>{
+authRoutes.get("/api/is-token-valid",auth,async(req, res, next)=>{
     try{
         const userID= isAuth(req, res);
         if(userID == false){

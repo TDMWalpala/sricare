@@ -1,10 +1,11 @@
 const pool = require("../database/dbconnection")
 const {service} = require("../sequelize/models")
-
+const express = require('express')
+const auth = require("../tokens/auth")
 let serviceRoutes = express.Router()
 
-
-serviceRoutes.post('/api/create-service', (req,res, next)=>{
+//create new service
+serviceRoutes.post('/api/create-service',auth ,(req,res, next)=>{
     try{
         service.create({
             'type':req.body.type,
@@ -23,7 +24,8 @@ serviceRoutes.post('/api/create-service', (req,res, next)=>{
 })
 
 
-serviceRoutes.get('/api/get-service/:userid', async(req,res, next)=>{
+///get all the services
+serviceRoutes.get('/api/get-service/:userid',auth, async(req,res, next)=>{
     try{
        var result = await service.findAll({
             where:{
@@ -42,9 +44,17 @@ serviceRoutes.get('/api/get-service/:userid', async(req,res, next)=>{
     next()
 })
 
-serviceRoutes.get('/api/add-service-user/:userid/:serviceid', async(req,res, next)=>{
+serviceRoutes.get('/api/add-service-user/:userid/:serviceid',auth, async(req,res, next)=>{
     try{
-       pool.cQuery(`insert into user-service (user_id,service_id) values(${req.params.user_id},${req.params.service_id}`)
+        console.log(`insert into service_user(user_id,service_id) values(${req.params.userid},${req.params.serviceid})`);
+       var result =  await pool.cQuery(`insert into service_user(user_id,service_id) values(${req.params.userid},${req.params.serviceid})`)
+       if(result==0){
+        res.send([])
+       }
+       else{
+           res.send(result)
+
+       }
 
     }
     catch(e){
@@ -56,7 +66,7 @@ serviceRoutes.get('/api/add-service-user/:userid/:serviceid', async(req,res, nex
     next()
 })
 
-serviceRoutes.get('/api/get-service', async(req,res, next)=>{
+serviceRoutes.get('/api/get-service', auth,async(req,res, next)=>{
     try{
         var result = await service.findAll({
 
@@ -74,10 +84,16 @@ serviceRoutes.get('/api/get-service', async(req,res, next)=>{
 })
 
 
-serviceRoutes.get('/api/get-user-service/:userid', async(req,res, next)=>{
+serviceRoutes.get('/api/get-user-service/:userid',auth, async(req,res, next)=>{
     try{
-        var result = await pool.cQuery(`select * from service-user left join service on service.service_id=service-user.service_id where service-user.user_id=${req.params.user_id}`)
-        res.send(result)
+        var result = await pool.cQuery(`select * from service_user left join service on service.service_id=service_user.service_id where service_user.user_id=${req.params.userid}`)
+        if(result==0){
+            res.send([])
+        }
+        else{
+            res.send(result)
+
+        }
 
     }
     catch(e){

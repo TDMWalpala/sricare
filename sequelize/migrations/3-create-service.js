@@ -18,6 +18,15 @@ module.exports = {
       title: {
         type: Sequelize.TEXT
       },
+      description: {
+        type: Sequelize.TEXT
+      },
+      created_at: {
+        type: Sequelize.DATE
+      },
+      updated_at: {
+        type: Sequelize.DATE
+      }
          });
   },
   async down(queryInterface, Sequelize) {

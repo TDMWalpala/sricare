@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class administrative_user extends Model {
     /**
@@ -11,8 +12,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.blog,{foreignKey:'user_id'})
-      this.hasMany(models.therapy_session,{foreignKey:'user_id'})
     }
   }
   administrative_user.init({

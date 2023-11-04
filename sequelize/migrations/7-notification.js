@@ -2,8 +2,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('service_user', {
-      service_id: {
+    await queryInterface.createTable('notification', {
+      noti_id: {
       type:Sequelize.INTEGER,
         references:{
           model:'service',
@@ -20,8 +20,8 @@ module.exports = {
       title: {
         type: Sequelize.TEXT
       },
-      payment: {
-        type: Sequelize.INTEGER
+      description: {
+        type: Sequelize.TEXT
       },
        status: {
         type: Sequelize.TEXT
@@ -36,6 +36,6 @@ module.exports = {
          });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('service_user');
+    await queryInterface.dropTable('notification');
   }
 };

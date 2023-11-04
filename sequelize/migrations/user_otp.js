@@ -2,13 +2,13 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('service_user', {
-      service_id: {
-      type:Sequelize.INTEGER,
-        references:{
-          model:'service',
-          key:'service_id',
-      }},
+    await queryInterface.createTable('user_otp', {
+      otp_id: {
+          allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       user_id:{
         type:Sequelize.INTEGER,
         references:{
@@ -17,16 +17,13 @@ module.exports = {
           
         }
       },
-      title: {
+      otp: {
         type: Sequelize.TEXT
-      },
-      payment: {
-        type: Sequelize.INTEGER
       },
        status: {
         type: Sequelize.TEXT
       },
-      created_at: {
+       created_at: {
         type: Sequelize.DATE
       },
       updated_at: {
@@ -36,6 +33,6 @@ module.exports = {
          });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('service_user');
+    await queryInterface.dropTable('user_otp');
   }
 };
