@@ -24,8 +24,8 @@ serviceRoutes.post('/api/create-service',auth ,(req,res, next)=>{
 })
 
 
-///get all the services
-serviceRoutes.get('/api/get-service/:userid',auth, async(req,res, next)=>{
+///get all the services by user
+serviceRoutes.get('/api/get-service',auth, async(req,res, next)=>{
     try{
        var result = await service.findAll({
             where:{
@@ -66,22 +66,7 @@ serviceRoutes.get('/api/add-service-user/:userid/:serviceid',auth, async(req,res
     next()
 })
 
-serviceRoutes.get('/api/get-service', auth,async(req,res, next)=>{
-    try{
-        var result = await service.findAll({
 
-        })
-        res.send(result)
-
-    }
-    catch(e){
-        console.log(e)
-    }
-
-
-
-    next()
-})
 
 
 serviceRoutes.get('/api/get-user-service/:userid',auth, async(req,res, next)=>{
