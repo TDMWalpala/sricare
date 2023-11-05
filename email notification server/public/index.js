@@ -11,6 +11,7 @@ let dotenv = require("dotenv");
 let  {verify} = require('jsonwebtoken');
 const notiRoutes = require("../routes/notification");
 var amqp = require('amqplib/callback_api');
+const { sendMail } = require("../../email notification server/models/core/email");
 
 dotenv.config()
 
@@ -48,14 +49,18 @@ async function connectRabbitMQ() {
 
         console.log(' [*] Waiting for logs. To exit press CTRL+C');
 
-            channel.assertQueue('push', {
+            channel.assertQueue('email', {
                         durable: true
             });
-            channel.bindQueue('push', exchange, 'pushbill');
+            channel.bindQueue('email', exchange, 'emailbill');
       
 
-        channel.consume('push', function(msg) {
+        channel.consume('email', function(msg) {
             console.log(" [x] %s: '%s'", msg.fields.routingKey, msg.content.toString());
+            var obj = msg.content.toString()
+            obj = JSON.parse(obj)
+            console.log(obj.email)
+            sendMail(obj.email,`<div> <h1>You have subscribed to ${obj.text}</h1></div>` )
         }, {
             noAck: true
         });

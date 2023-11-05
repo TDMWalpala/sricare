@@ -7,18 +7,7 @@ let notiRoutes = express.Router()
 
 //create notification
 notiRoutes.post('/api/create-notification',auth ,(req,res, next)=>{
-    try{
-        service.create({
-            'type':"email",
-            'payment':req.body.payment,
-            'title':req.body.title,
-            'status':'active'
-        })
 
-    }
-    catch(e){
-        console.log(e)
-    }
 
 
 

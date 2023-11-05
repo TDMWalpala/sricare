@@ -2,6 +2,8 @@ const {bill} = require("../sequelize/models")
 
 let express= require("express")
 const auth = require("../tokens/auth")
+const { sendNotification } = require("../models/biil")
+const pool = require("../database/dbconnection")
 let billRoutes = express.Router()
 
 //create bills
@@ -27,16 +29,8 @@ billRoutes.post('/api/create-bill',auth, (req,res, next)=>{
 //get bill by userid
 billRoutes.get('/api/get-bill/:userid',auth, async(req,res, next)=>{
     try{
-       var result = await bill.findAll({
-            where:{
-                user_id:req.params.userid,
-                title:req.params.title,
-                payment:req.params.payment,
-                description:req.params.description,
-                status:req.params.status
-            }
-        })
-        res.send(result)
+        sendNotification(req.params.userid)
+       
 
     }
     catch(e){

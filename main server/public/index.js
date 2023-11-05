@@ -14,6 +14,7 @@ const assetRouter = require("../routes/asset_routes");
 const serviceRoutes = require("../routes/service_route");
 const billRoutes = require("../routes/bill_routes");
 var amqp = require('amqplib/callback_api');
+const Bill = require("../models/biil");
 
 
 dotenv.config()

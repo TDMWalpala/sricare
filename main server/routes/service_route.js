@@ -52,8 +52,12 @@ serviceRoutes.get('/api/add-service-user/:userid/:serviceid',auth, async(req,res
        var result =  await pool.cQuery(`insert into service_user(user_id,service_id) values(${req.params.userid},${req.params.serviceid})`)
        var user = await pool.cQuery(`select * from application_user where user_id=${req.params.userid}`)
        var service = await pool.cQuery(`select * from service where service_id=${req.params.serviceid}`)
-        Bill.sendMail(user.email,service.title,'roaming')
-        Bill.tsendMail(user.email,service.title,'roaming')
+        
+       console.log("[[[[[[")
+       console.log(user);
+       console.log(service)
+       console.log("[[[[[[")
+        Bill.sendMail(user[0].email,service[0].title,user[0].payment)
        if(result==0){
         res.send([])
        }
