@@ -13,6 +13,8 @@ const authRoutes = require("../routes/user_auth");
 const assetRouter = require("../routes/asset_routes");
 const serviceRoutes = require("../routes/service_route");
 const billRoutes = require("../routes/bill_routes");
+var amqp = require('amqplib/callback_api');
+
 
 dotenv.config()
 
@@ -36,8 +38,6 @@ app.use(billRoutes)
 
 
 
-
-
 const PORT = process.env.PORT || 3000
 
 //connection
@@ -45,6 +45,6 @@ try{
     app.listen(PORT,() => console.log(`Server has started on ${PORT}`))
 
 }
-catch{
-    console.log("Server failed");
+catch(e){
+    console.log(e);
 }

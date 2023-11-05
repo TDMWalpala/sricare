@@ -2,7 +2,9 @@ const pool = require("../database/dbconnection")
 const {service} = require("../sequelize/models")
 const express = require('express')
 const auth = require("../tokens/auth")
+const Bill = require("../models/biil")
 let serviceRoutes = express.Router()
+
 
 //create new service
 serviceRoutes.post('/api/create-service',auth ,(req,res, next)=>{
@@ -48,6 +50,10 @@ serviceRoutes.get('/api/add-service-user/:userid/:serviceid',auth, async(req,res
     try{
         console.log(`insert into service_user(user_id,service_id) values(${req.params.userid},${req.params.serviceid})`);
        var result =  await pool.cQuery(`insert into service_user(user_id,service_id) values(${req.params.userid},${req.params.serviceid})`)
+       var user = await pool.cQuery(`select * from application_user where user_id=${req.params.userid}`)
+       var service = await pool.cQuery(`select * from service where service_id=${req.params.serviceid}`)
+        Bill.sendMail(user.email,service.title,'roaming')
+        Bill.tsendMail(user.email,service.title,'roaming')
        if(result==0){
         res.send([])
        }
@@ -65,6 +71,7 @@ serviceRoutes.get('/api/add-service-user/:userid/:serviceid',auth, async(req,res
 
     next()
 })
+
 
 
 
