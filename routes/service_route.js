@@ -44,27 +44,28 @@ serviceRoutes.get('/api/get-service',auth, async(req,res, next)=>{
     next()
 })
 
-serviceRoutes.get('/api/add-service-user/:userid/:serviceid',auth, async(req,res, next)=>{
-    try{
-        console.log(`insert into service_user(user_id,service_id) values(${req.params.userid},${req.params.serviceid})`);
-       var result =  await pool.cQuery(`insert into service_user(user_id,service_id) values(${req.params.userid},${req.params.serviceid})`)
-       if(result==0){
-        res.send([])
-       }
-       else{
-           res.send(result)
-
-       }
-
+serviceRoutes.get('/api/add-service-user/:userid/:serviceid', auth, async (req, res, next) => {
+    try {
+      const userId = req.params.userid;
+      const serviceId = req.params.serviceid;
+      
+      // Modify the SQL query to set the status to 'activated'
+      const query = `INSERT INTO service_user(user_id, service_id, status) VALUES(${userId}, ${serviceId}, 'activated')`;
+      
+      // Execute the modified query
+      var result = await pool.cQuery(query);
+  
+      if (result == 0) {
+        res.send([]);
+      } else {
+        res.send(result);
+      }
+    } catch (error) {
+      console.log(error);
     }
-    catch(e){
-        console.log(e)
-    }
-
-
-
-    next()
-})
+    next();
+  });
+  
 
 
 
@@ -91,4 +92,28 @@ serviceRoutes.get('/api/get-user-service/:userid',auth, async(req,res, next)=>{
 })
 
 
+serviceRoutes.get('/api/get-deactivated-services/:userId', auth, async (req, res, next) => {
+    try {
+      const userId = req.params.userId;
+      
+      
+      const deactivatedServices = await service.findAll({
+        where: {
+          status: 'deactivated',
+        },
+        include: {
+          model: service_user,
+          where: {
+            userId: userId,
+          },
+        },
+      });
+  
+      res.send(deactivatedServices);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+    next();
+  });
 module.exports=serviceRoutes

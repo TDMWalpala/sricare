@@ -1,6 +1,7 @@
 import LoginForm from './pages/Common/Login';
 import SignUpForm from './pages/Common/SignUp';
 import Services from './pages/Common/Services';
+import Dashboard from './pages/Common/Dashboard';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import './App.css';
@@ -18,6 +19,7 @@ function App() {
                 <Route path="login" element={<LoginForm />} />
                 <Route path="signup" element={<SignUpForm />} />
                 <Route path ="services"  element={<Services />} />
+                {/* <Route path  = "dashboard" element={<Dashboard />} /> */}
                 {/* <Route path="/unauthorized" element={<Unauthorized />} /> */}
 
     </Routes>

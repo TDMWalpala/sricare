@@ -58,7 +58,7 @@ function LoginForm() {
 
 
 
-        navigate('/services');
+        navigate('/dashboard', {state: {username: username}});
 
     
         
